@@ -115,13 +115,18 @@ RCT_EXPORT_METHOD(prepare)
 }
 
 - (BOOL)activatedAlternativeHapticForType:(NSString *)type {
-  // TODO: add support for all haptic styles?
-  if([self needsAlternativeHaptic]){
-    if (type == HAPTIC_DEPRECATED_IMPACT) {
+  if ([self needsAlternativeHaptic]) {
+    if ([type isEqualToString:HAPTIC_DEPRECATED_IMPACT] ||
+        [type isEqualToString:HAPTIC_IMPACT_LIGHT] ||
+        [type isEqualToString:HAPTIC_IMPACT_MEDIUM] ||
+        [type isEqualToString:HAPTIC_IMPACT_HEAVY]) {
       AudioServicesPlaySystemSound((SystemSoundID) 1520);
-    } else if (type == HAPTIC_DEPRECATED_NOTIFICATION) {
+    } else if ([type isEqualToString:HAPTIC_DEPRECATED_NOTIFICATION] ||
+               [type isEqualToString:HAPTIC_NOTIFICATION_ERROR] ||
+               [type isEqualToString:HAPTIC_NOTIFICATION_WARNING] ||
+               [type isEqualToString:HAPTIC_NOTIFICATION_SUCCESS]) {
       AudioServicesPlaySystemSound((SystemSoundID) 1521);
-    } else if (type == HAPTIC_SELECTION) {
+    } else if ([type isEqualToString:HAPTIC_SELECTION]) {
       AudioServicesPlaySystemSound((SystemSoundID) 1519);
     }
     return YES;
